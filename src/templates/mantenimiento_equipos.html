@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mantenimiento de Equipos</title>
+</head>
+<body>
+    <h1>Mantenimiento de Equipos</h1>
+    <form method="post">
+        <label for="equipo">Equipo:</label>
+        <input type="text" name="equipo" required>
+        <label for="fecha_mantenimiento">Fecha de Mantenimiento:</label>
+        <input type="date" name="fecha_mantenimiento" required>
+        <label for="detalles">Detalles:</label>
+        <textarea name="detalles" required></textarea>
+        <button type="submit">Agregar</button>
+    </form>
+    <h2>Registros de Mantenimiento</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Equipo</th>
+                <th>Fecha</th>
+                <th>Detalles</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mantenimiento in mantenimientos %}
+            <tr>
+                <td>{{ mantenimiento.id }}</td>
+                <td>{{ mantenimiento.equipo }}</td>
+                <td>{{ mantenimiento.fecha_mantenimiento }}</td>
+                <td>{{ mantenimiento.detalles }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('index') }}">Volver</a>
+</body>
+</html>

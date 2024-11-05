@@ -1,0 +1,13 @@
+<h1>Editar Material</h1>
+<form method="POST">
+    <div class="form-group">
+        <label for="cantidad_actual">Cantidad Actual</label>
+        <input type="number" class="form-control" id="cantidad_actual" name="cantidad_actual" value="{{ material.cantidad_actual }}" required>
+    </div>
+    <div class="form-group">
+        <label for="cantidad_minima">Cantidad Mínima</label>
+        <input type="number" class="form-control" id="cantidad_minima" name="cantidad_minima" value="{{ material.cantidad_minima }}" required>
+    </div>
+    <button type="submit" class="btn btn-success">Guardar cambios</button>
+    <a href="{{ url_for('listar_materiales') }}" class="btn btn-secondary">Cancelar</a>
+</form>

@@ -1,0 +1,26 @@
+<h1>Lista de Materiales</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Cantidad Actual</th>
+            <th>Cantidad Mínima</th>
+            <th>Proveedor</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for material in materiales %}
+        <tr>
+            <td>{{ material.nombre }}</td>
+            <td>{{ material.cantidad_actual }}</td>
+            <td>{{ material.cantidad_minima }}</td>
+            <td>{{ material.proveedor_rel.nombre }}</td>
+            <td>
+                <a href="{{ url_for('editar_material', id=material.id) }}" class="btn btn-primary">Editar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{{ url_for('index') }}">Volver</a>

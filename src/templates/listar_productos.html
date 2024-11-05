@@ -1,0 +1,24 @@
+<h1>Lista de Productos</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Lote</th>
+            <th>Cantidad</th>
+            <th>Cantidad de Lotes</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for producto in productos %}
+        <tr>
+            <td>{{ producto.nombre }}</td>
+            <td>{{ producto.precio }}</td>
+            <td>{{ producto.lotes }}</td>
+            <td>{{ producto.cantidad }}</td>
+            <td>{{ producto.cantidad_lotes }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{{ url_for('index') }}">Volver</a>

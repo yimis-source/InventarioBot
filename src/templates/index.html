@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Bienvenido al Sistema de Inventario</h1>
+    <a href="{{ url_for('agregar_material') }}">Agregar Material</a><br>
+    <a href="{{ url_for('listar_materiales') }}">Listar Materiales</a><br>
+    <a href="{{ url_for('agregar_cliente') }}">Agregar Cliente</a><br>
+    <a href="{{ url_for('listar_clientes') }}">Listar Clientes</a><br>
+    <a href="{{ url_for('agregar_producto')}}">Agregar producto</a><br>
+    <a href="{{ url_for('listar_productos') }}">Listar Productos</a><br>
+    <a href="{{ url_for('agregar_proveedor') }}">Agregar Proveedor</a><br>
+    <a href="{{ url_for('listar_proveedores') }}">Listar Proveedores</a><br>
+    <a href="{{ url_for('mantenimiento') }}">Mantenimiento de Equipos</a><br>
+    <a href="{{ url_for('alertas') }}">Alertas de Reabastecimiento</a><br>
+    <a href="{{ url_for('ofertas') }}">Generar Ofertas</a><br>
+</body>
+</html>

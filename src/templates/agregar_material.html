@@ -1,0 +1,34 @@
+<h1>Agregar Material</h1>
+<form method="POST">
+    <div>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+    </div>
+    <div>
+        <label for="cantidad_actual">Cantidad Actual:</label>
+        <input type="number" id="cantidad_actual" name="cantidad_actual" required>
+    </div>
+    <div>
+        <label for="cantidad_minima">Cantidad Mínima:</label>
+        <input type="number" id="cantidad_minima" name="cantidad_minima" required>
+    </div>
+    <div>
+        <label for="proveedor_id">Proveedor:</label>
+        <select id="proveedor_id" name="proveedor_id" required>
+            <option value="">Seleccione un proveedor</option>
+            {% for proveedor in proveedores %}
+            <option value="{{ proveedor.id }}">{{ proveedor.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div>
+        <label for="productos_id">Producto:</label>
+        <select id="productos_id" name="productos_id">
+            <option value="">Seleccione un producto (opcional)</option>
+            {% for producto in productos %}
+            <option value="{{ producto.id }}">{{ producto.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit">Agregar</button>
+</form>

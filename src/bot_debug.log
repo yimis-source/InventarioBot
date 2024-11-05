@@ -1,0 +1,32 @@
+2024-11-04 23:22:17,277 - INFO - Iniciando bot de automatización con debugging mejorado
+2024-11-04 23:22:17,277 - INFO - Iniciando ciclo de revisión
+2024-11-04 23:22:17,281 - INFO - Encontrados 1 materiales bajo el mínimo
+2024-11-04 23:22:17,281 - INFO - Procesando material: Material Test
+2024-11-04 23:22:17,281 - INFO - Intentando generar pedido para material: Material Test
+2024-11-04 23:22:17,281 - INFO - Cantidad actual: 5, Mínima: 20
+2024-11-04 23:22:17,291 - INFO - Pedido #1 generado exitosamente
+2024-11-04 23:22:18,312 - ERROR - Error de autenticación SMTP: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials ada2fe7eead31-4a957528ac2sm1983991137.29 - gsmtp')
+2024-11-04 23:22:18,312 - WARNING - No se pudo enviar la notificación por email para el pedido #1
+2024-11-04 23:22:18,312 - INFO - Pedido generado exitosamente para Material Test
+2024-11-04 23:22:18,312 - INFO - Ciclo de revisión completado
+2024-11-04 23:27:22,465 - INFO - Iniciando bot de automatización con debugging mejorado
+2024-11-04 23:27:22,465 - INFO - Iniciando ciclo de revisión
+2024-11-04 23:27:22,469 - INFO - Encontrados 1 materiales bajo el mínimo
+2024-11-04 23:27:22,469 - INFO - Procesando material: Material Test
+2024-11-04 23:27:22,469 - INFO - Intentando generar pedido para material: Material Test
+2024-11-04 23:27:22,469 - INFO - Cantidad actual: 5, Mínima: 20
+2024-11-04 23:27:22,479 - INFO - Pedido #1 generado exitosamente
+2024-11-04 23:27:23,477 - ERROR - Error de autenticación SMTP: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials a1e0cc1a2514c-855dad28ecasm2013712241.4 - gsmtp')
+2024-11-04 23:27:23,477 - WARNING - No se pudo enviar la notificación por email para el pedido #1
+2024-11-04 23:27:23,477 - INFO - Pedido generado exitosamente para Material Test
+2024-11-04 23:27:23,477 - INFO - Ciclo de revisión completado
+2024-11-04 23:38:55,610 - INFO - Iniciando bot de automatización con debugging mejorado
+2024-11-04 23:38:55,610 - INFO - Iniciando ciclo de revisión
+2024-11-04 23:38:55,614 - INFO - Encontrados 1 materiales bajo el mínimo
+2024-11-04 23:38:55,614 - INFO - Procesando material: Material Test
+2024-11-04 23:38:55,614 - INFO - Intentando generar pedido para material: Material Test
+2024-11-04 23:38:55,614 - INFO - Cantidad actual: 5, Mínima: 20
+2024-11-04 23:38:55,624 - INFO - Pedido #1 generado exitosamente
+2024-11-04 23:38:57,585 - INFO - Correo enviado exitosamente a empresatroll466@gmail.com
+2024-11-04 23:38:57,585 - INFO - Pedido generado exitosamente para Material Test
+2024-11-04 23:38:57,585 - INFO - Ciclo de revisión completado
