@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asignar Técnico a Mantenimiento</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Asignar Técnico a Mantenimiento</h1>
+    <form action="{{ url_for('asignar_tecnico_mantenimiento', mantenimiento_id=mantenimiento.id) }}" method="POST">
+        <label for="tecnico_id">Técnico:</label>
+        <select name="tecnico_id" required>
+            {% for tecnico in tecnicos %}
+                <option value="{{ tecnico.id }}">
+                    {{ tecnico.nombre }} - {{ tecnico.especialidad }}
+                </option>
+            {% endfor %}
+        </select>
+        <button type="submit">Asignar</button>
+    </form>
+    <a href="{{ url_for('mantenimiento') }}">Volver</a>
+</body>
+</html>

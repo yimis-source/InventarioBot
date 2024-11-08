@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Técnico</title>
+</head>
+<body>
+    <h1>Agregar Técnico</h1>
+    <form method="POST">
+        <label for="nombre">Nombre</label>
+        <input type="text" name="nombre" required>
+        
+        <label for="email">Email</label>
+        <input type="email" name="email" required>
+        
+        <label for="telefono">Teléfono</label>
+        <input type="text" name="telefono" required>
+        
+        <label for="especialidad">Especialidad</label>
+        <input type="text" name="especialidad">
+        
+        <button type="submit">Agregar Técnico</button>
+        <a href="{{ url_for('index') }}">Cancelar</a>
+    </form>
+</body>
+</html>

@@ -4,18 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mantenimiento de Equipos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <h1>Mantenimiento de Equipos</h1>
+    
     <form method="post">
         <label for="equipo">Equipo:</label>
         <input type="text" name="equipo" required>
+        
         <label for="fecha_mantenimiento">Fecha de Mantenimiento:</label>
         <input type="date" name="fecha_mantenimiento" required>
+        
         <label for="detalles">Detalles:</label>
         <textarea name="detalles" required></textarea>
-        <button type="submit">Agregar</button>
+        
+        <button type="submit" class="btn btn-primary">Agregar</button>
     </form>
+    
     <h2>Registros de Mantenimiento</h2>
     <table>
         <thead>
@@ -24,6 +30,8 @@
                 <th>Equipo</th>
                 <th>Fecha</th>
                 <th>Detalles</th>
+                <th>Técnico Asignado</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -31,12 +39,16 @@
             <tr>
                 <td>{{ mantenimiento.id }}</td>
                 <td>{{ mantenimiento.equipo }}</td>
-                <td>{{ mantenimiento.fecha_mantenimiento }}</td>
+                <td>{{ mantenimiento.fecha_mantenimiento.strftime('%d-%m-%Y') }}</td>
                 <td>{{ mantenimiento.detalles }}</td>
+                <td>{{ mantenimiento.tecnico.nombre if mantenimiento.tecnico else 'Sin asignar' }}</td>
+                <td>
+                    <a href="{{ url_for('asignar_tecnico_mantenimiento', mantenimiento_id=mantenimiento.id) }}" class="btn btn-primary">Asignar Técnico</a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    <a href="{{ url_for('index') }}">Volver</a>
+    <a href="{{ url_for('index') }}" class="btn btn-secondary">Volver al inicio</a>
 </body>
 </html>

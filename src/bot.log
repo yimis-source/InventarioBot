@@ -1,3 +1,0 @@
-2024-11-04 23:15:12,164 - INFO - Iniciando bot de automatización
-2024-11-04 23:15:12,165 - ERROR - Error en health check: Textual SQL expression 'SELECT 1' should be explicitly declared as text('SELECT 1')
-2024-11-04 23:15:12,165 - ERROR - Health check fallido - Esperando próximo ciclo

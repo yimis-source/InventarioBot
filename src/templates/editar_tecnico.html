@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Técnico</title>
+</head>
+<body>
+    <h1>Editar Técnico</h1>
+    <form method="POST">
+        <label for="nombre">Nombre</label>
+        <input type="text" name="nombre" value="{{ tecnico.nombre }}" required>
+        
+        <label for="email">Email</label>
+        <input type="email" name="email" value="{{ tecnico.email }}" required>
+        
+        <label for="telefono">Teléfono</label>
+        <input type="text" name="telefono" value="{{ tecnico.telefono }}" required>
+        
+        <label for="especialidad">Especialidad</label>
+        <input type="text" name="especialidad" value="{{ tecnico.especialidad }}">
+        
+        <button type="submit">Guardar Cambios</button>
+        <a href="{{ url_for('listar_tecnicos') }}">Cancelar</a>
+    </form>
+</body>
+</html>

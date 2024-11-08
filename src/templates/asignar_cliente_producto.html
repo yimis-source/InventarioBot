@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asignar Cliente a Producto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Asignar Producto a Cliente</h1>
+    <form action="{{ url_for('asignar_cliente_producto') }}" method="POST">
+        <div>
+            <label for="cliente_id">Cliente:</label>
+            <select name="cliente_id" required>
+                {% for cliente in clientes %}
+                    <option value="{{ cliente.id }}">{{ cliente.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div>
+            <label for="producto_id">Producto:</label>
+            <select name="producto_id" required>
+                {% for producto in productos %}
+                    <option value="{{ producto.id }}">{{ producto.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label for="cantidad_minima">Cantidad Mínima:</label>
+            <input type="number" name="cantidad_minima" min="1" required>
+        </div>
+
+        <button type="submit">Asignar</button>
+    </form>
+    
+    <a href="{{ url_for('index') }}">Volver al inicio</a>
+</body>
+</html>

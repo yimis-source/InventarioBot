@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Pedidos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Lista de Pedidos</h1>
+    <a href="{{ url_for('crear_pedido') }}">Crear Pedido</a><br><br>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Material</th>
+            <th>Proveedor</th>
+            <th>Cantidad</th>
+            <th>Estado</th>
+            <th>Fecha de Creación</th>
+            <th>Acciones</th>
+        </tr>
+        {% for pedido in pedidos %}
+        <tr>
+            <td>{{ pedido.id }}</td>
+            <td>{{ pedido.material.nombre }}</td>
+            <td>{{ pedido.proveedor.nombre }}</td>
+            <td>{{ pedido.cantidad }}</td>
+            <td>{{ pedido.estado }}</td>
+            <td>{{ pedido.fecha_creacion }}</td>
+            <td>
+                <a href="{{ url_for('editar_pedido', id=pedido.id) }}">Editar Estado</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{{ url_for('index') }}">Volver al inicio</a>
+</body>
+</html>

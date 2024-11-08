@@ -1,16 +1,27 @@
 from config import db
 from datetime import datetime
 
+class Oferta(db.Model):
+    __tablename__ = 'ofertas'
+    id = db.Column(db.Integer, primary_key=True)
+    cliente_id = db.Column(db.Integer, db.ForeignKey('clientes.id'), nullable=False)
+    producto_id = db.Column(db.Integer, db.ForeignKey('productos.id'), nullable=False)
+    lotes_ofrecidos = db.Column(db.Integer, nullable=False)
+    fecha_creacion = db.Column(db.DateTime, default=datetime.utcnow)
+
+    cliente = db.relationship('Cliente', backref=db.backref('ofertas', lazy=True))
+    producto = db.relationship('Productos', backref=db.backref('ofertas', lazy=True))
+
 class Pedido(db.Model):
     __tablename__ = 'pedidos'
     id = db.Column(db.Integer, primary_key=True)
     material_id = db.Column(db.Integer, db.ForeignKey('materiales.id'), nullable=False)
     proveedor_id = db.Column(db.Integer, db.ForeignKey('proveedores.id'), nullable=False)
     cantidad = db.Column(db.Integer, nullable=False)
-    estado = db.Column(db.String(20), nullable=False, default='pendiente')  # pendiente, completado, cancelado
+    estado = db.Column(db.String(20), nullable=False, default='pendiente')
     fecha_creacion = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     fecha_actualizacion = db.Column(db.DateTime, onupdate=datetime.utcnow)
-    
+
     material = db.relationship('Material', backref='pedidos')
     proveedor = db.relationship('Proveedor', backref='pedidos')
 
@@ -21,7 +32,7 @@ class ClienteProducto(db.Model):
     producto_id = db.Column(db.Integer, db.ForeignKey('productos.id'), nullable=False)
     cantidad_minima = db.Column(db.Integer, nullable=False, default=1)
     notificar = db.Column(db.Boolean, default=True)
-    
+
     cliente = db.relationship('Cliente', backref='productos_asignados')
     producto = db.relationship('Productos', backref='clientes_asignados')
 
@@ -40,10 +51,9 @@ class MaterialMantenimiento(db.Model):
     material_id = db.Column(db.Integer, db.ForeignKey('materiales.id'), nullable=False)
     mantenimiento_id = db.Column(db.Integer, db.ForeignKey('mantenimiento.id'), nullable=False)
     cantidad_requerida = db.Column(db.Integer, nullable=False)
-    
+
     material = db.relationship('Material', backref='mantenimientos_requeridos')
     mantenimiento = db.relationship('Mantenimiento', backref='materiales_requeridos')
-
 
 class Material(db.Model):
     __tablename__ = 'materiales'
@@ -53,18 +63,18 @@ class Material(db.Model):
     cantidad_minima = db.Column(db.Integer, nullable=False)
     proveedor_id = db.Column(db.Integer, db.ForeignKey('proveedores.id'), nullable=False)
     productos_id = db.Column(db.Integer, db.ForeignKey('productos.id'), nullable=True)
-    fecha_creacion = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)  # Agregado
-    ultima_actualizacion = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)  # Agregado
+    fecha_creacion = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    ultima_actualizacion = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-class Productos(db.Model):
+class Productos(db.Model):  
     __tablename__ = 'productos'
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100), nullable=False)
     precio = db.Column(db.Float, nullable=False)
-    lotes = db.Column(db.Integer, nullable=False)  # Cambiado de String a Integer
+    lotes = db.Column(db.Integer, nullable=False)
     cantidad = db.Column(db.Integer, nullable=False)
     materiales = db.relationship('Material', backref='producto_rel', lazy=True)
-    fecha_creacion = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)  # Agregado
+    fecha_creacion = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     @property
     def cantidad_lotes(self):
@@ -78,10 +88,8 @@ class Mantenimiento(db.Model):
     detalles = db.Column(db.String(200), nullable=False)
     fecha_registro = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     tecnico_id = db.Column(db.Integer, db.ForeignKey('tecnicos.id'))
-    estado = db.Column(db.String(20), default='programado')  # programado, en_proceso, completado, vencido
+    estado = db.Column(db.String(20), default='programado')
     ultima_actualizacion = db.Column(db.DateTime, onupdate=datetime.utcnow)
-
-
 
 class Cliente(db.Model):
     __tablename__ = 'clientes'
@@ -97,4 +105,3 @@ class Proveedor(db.Model):
     telefono = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(120), nullable=False)
     materiales = db.relationship('Material', backref='proveedor_rel', lazy=True)
-

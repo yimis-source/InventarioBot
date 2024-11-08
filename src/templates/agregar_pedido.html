@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Pedido</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Crear Pedido</h1>
+    <form action="{{ url_for('crear_pedido') }}" method="POST">
+        <label for="material_id">Material:</label>
+        <select name="material_id" required>
+            {% for material in materiales %}
+                <option value="{{ material.id }}">{{ material.nombre }}</option>
+            {% endfor %}
+        </select><br>
+        
+        <label for="proveedor_id">Proveedor:</label>
+        <select name="proveedor_id" required>
+            {% for proveedor in proveedores %}
+                <option value="{{ proveedor.id }}">{{ proveedor.nombre }}</option>
+            {% endfor %}
+        </select><br>
+        
+        <label for="cantidad">Cantidad:</label>
+        <input type="number" name="cantidad" required><br>
+        
+        <button type="submit">Crear Pedido</button>
+    </form>
+    <a href="{{ url_for('listar_pedidos') }}">Volver a la lista de pedidos</a>
+</body>
+</html>

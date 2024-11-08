@@ -1,24 +1,41 @@
-<h1>Lista de Productos</h1>
-<table>
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Precio</th>
-            <th>Lote</th>
-            <th>Cantidad</th>
-            <th>Cantidad de Lotes</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for producto in productos %}
-        <tr>
-            <td>{{ producto.nombre }}</td>
-            <td>{{ producto.precio }}</td>
-            <td>{{ producto.lotes }}</td>
-            <td>{{ producto.cantidad }}</td>
-            <td>{{ producto.cantidad_lotes }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-<a href="{{ url_for('index') }}">Volver</a>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Productos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Lista de Productos</h1>
+    <a href="{{ url_for('agregar_producto') }}">Crear Producto</a><br><br>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Lote</th>
+                <th>Cantidad</th>
+                <th>Cantidad de Lotes</th>
+                <th>Fecha de Creación</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for producto in productos %}
+            <tr>
+                <td>{{ producto.nombre }}</td>
+                <td>{{ producto.precio }}</td>
+                <td>{{ producto.lotes }}</td>
+                <td>{{ producto.cantidad }}</td>
+                <td>{{ producto.cantidad_lotes }}</td>
+                <td>{{ producto.fecha_creacion.strftime('%d-%m-%Y') }}</td>
+                <td>
+                    <a href="{{ url_for('editar_producto', id=producto.id) }}">Editar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('index') }}">Volver al inicio</a>
+</body>
+</html>

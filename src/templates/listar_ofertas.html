@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Ofertas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Lista de Ofertas</h1>
+    <a href="{{ url_for('agregar_oferta') }}">Crear Oferta</a><br><br>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Producto</th>
+            <th>Lotes Ofrecidos</th>
+            <th>Fecha de Creación</th>
+            <th>Acciones</th>
+        </tr>
+        {% for oferta in ofertas %}
+        <tr>
+            <td>{{ oferta.id }}</td>
+            <td>{{ oferta.cliente.nombre }}</td>
+            <td>{{ oferta.producto.nombre }}</td>
+            <td>{{ oferta.lotes_ofrecidos }}</td>  
+            <td>{{ oferta.fecha_creacion.strftime('%d-%m-%Y') }}</td>
+            <td>
+                <a href="{{ url_for('editar_oferta', id=oferta.id) }}">Editar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{{ url_for('index') }}">Volver al inicio</a>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Pedido</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Editar Estado del Pedido</h1>
+    <form action="{{ url_for('editar_pedido', id=pedido.id) }}" method="POST">
+        <label for="estado">Estado:</label>
+        <select name="estado" required>
+            <option value="pendiente" {% if pedido.estado == 'pendiente' %}selected{% endif %}>Pendiente</option>
+            <option value="completado" {% if pedido.estado == 'completado' %}selected{% endif %}>Completado</option>
+            <option value="cancelado" {% if pedido.estado == 'cancelado' %}selected{% endif %}>Cancelado</option>
+        </select><br>
+        
+        <button type="submit">Actualizar Estado</button>
+    </form>
+    <a href="{{ url_for('listar_pedidos') }}">Volver a la lista de pedidos</a>
+</body>
+</html>

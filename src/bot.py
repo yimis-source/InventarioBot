@@ -1,278 +1,293 @@
 import os
-from config import create_app, db
-from models import (
-    Material, Cliente, Mantenimiento, Proveedor, Productos,
-    Pedido, ClienteProducto, TecnicoMantenimiento, MaterialMantenimiento
-)
-import time
 from datetime import datetime, timedelta
-import smtplib
+import logging
+import time
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-import logging
-
-# Crear la aplicación
-app = create_app()
-
-# Configuración de logging
-logging.basicConfig(
-    filename='bot_debug.log',
-    level=logging.DEBUG,  # Cambiado a DEBUG para más detalle
-    format='%(asctime)s - %(levelname)s - %(message)s'
+import smtplib
+from config import create_app, db
+from models import (
+    Material, Cliente, Mantenimiento, Oferta, Proveedor, Productos,
+    Pedido, ClienteProducto, TecnicoMantenimiento, MaterialMantenimiento
 )
 
-# Configuración de email desde variables de entorno
-EMAIL = os.getenv('EMAIL_USER', 'empresatroll466@gmail.com')
-PASSWORD = os.getenv('EMAIL_PASSWORD', 'xjps xhrb nbni plue')
 
-def send_notification(subject, body, to_email, to_phone=None):
-    """Función unificada para enviar notificaciones por email y SMS"""
-    # Intentar enviar email
-    success_email = send_email(subject, body, to_email)   
-    
-    return success_email 
+logging.basicConfig(
+    filename='bot_automatization.log',
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
 
-
-def send_email(subject, body, to_email):
-    """Función de envío de email con mejor manejo de errores"""
-    try:
-        msg = MIMEMultipart()
-        msg['From'] = EMAIL
-        msg['To'] = to_email
-        msg['Subject'] = subject
-        msg.attach(MIMEText(body, 'plain'))
+class AutomatizationBot:
+    def __init__(self):
+        self.app = create_app()
+        self.email = os.getenv('EMAIL_USER', 'empresatroll466@gmail.com')
+        self.password = os.getenv('EMAIL_PASSWORD', 'xjps xhrb nbni plue')
         
-        with smtplib.SMTP('smtp.gmail.com', 587) as server:
-            server.starttls()
-            server.login(EMAIL, PASSWORD)
-            server.send_message(msg)
-        logging.info(f"Correo enviado exitosamente a {to_email}")
-        return True
-    except smtplib.SMTPAuthenticationError as e:
-        logging.error(f"Error de autenticación SMTP: {e}")
-        return False
-    except Exception as e:
-        logging.error(f"Error al enviar correo: {str(e)}")
-        return False
-
-def generar_pedido_automatico(material):
-    """Versión mejorada de generación de pedidos con mejor logging"""
-    try:
-        logging.info(f"Intentando generar pedido para material: {material.nombre}")
-        logging.info(f"Cantidad actual: {material.cantidad_actual}, Mínima: {material.cantidad_minima}")
-        
-        cantidad_pedido = int((material.cantidad_minima - material.cantidad_actual) * 1.5)
-        
-        # Verificar si ya existe un pedido pendiente
-        pedido_existente = Pedido.query.filter_by(
-            material_id=material.id,
-            estado='pendiente'
-        ).first()
-        
-        if pedido_existente:
-            logging.info(f"Ya existe un pedido pendiente para {material.nombre}")
-            return None
-            
-        nuevo_pedido = Pedido(
-            material_id=material.id,
-            proveedor_id=material.proveedor_id,
-            cantidad=cantidad_pedido,
-            estado='pendiente'
-        )
-        
-        db.session.add(nuevo_pedido)
-        db.session.commit()
-        
-        logging.info(f"Pedido #{nuevo_pedido.id} generado exitosamente")
-        
-        # Intentar notificar al proveedor, pero no revertir si falla
-        mensaje = f"""
-        Pedido Automático - {material.nombre}
-        Cantidad requerida: {cantidad_pedido}
-        Nivel actual: {material.cantidad_actual}
-        Nivel mínimo: {material.cantidad_minima}
-        Pedido #{nuevo_pedido.id}
-        """
-        
-        email_success = send_email(
-            subject=f"Pedido Automático - {material.nombre}",
-            body=mensaje,
-            to_email=material.proveedor_rel.email
-        )
-        
-        if not email_success:
-            logging.warning(f"No se pudo enviar la notificación por email para el pedido #{nuevo_pedido.id}")
-        
-        return nuevo_pedido
-        
-    except Exception as e:
-        logging.error(f"Error al generar pedido automático: {str(e)}")
-        db.session.rollback()
-        return None
-def revisar_niveles_inventario():
-    """Versión mejorada de revisión de inventario con mejor logging"""
-    with app.app_context():
+    def send_email(self, subject, body, to_email):
         try:
-            materiales_bajos = Material.query.filter(
-                Material.cantidad_actual < Material.cantidad_minima
-            ).all()
+            msg = MIMEMultipart()
+            msg['From'] = self.email
+            msg['To'] = to_email
+            msg['Subject'] = subject
+            msg.attach(MIMEText(body, 'plain'))
             
-            logging.info(f"Encontrados {len(materiales_bajos)} materiales bajo el mínimo")
-            
-            for material in materiales_bajos:
-                logging.info(f"Procesando material: {material.nombre}")
-                pedido = generar_pedido_automatico(material)
-                if pedido:
-                    logging.info(f"Pedido generado exitosamente para {material.nombre}")
-                    
+            with smtplib.SMTP('smtp.gmail.com', 587) as server:
+                server.starttls()
+                server.login(self.email, self.password)
+                server.send_message(msg)
+            logging.info(f"Email enviado exitosamente a {to_email}")
+            return True
         except Exception as e:
-            logging.error(f"Error al revisar niveles de inventario: {str(e)}")
-def revisar_lotes_completos():
-    """Revisa los lotes completos y notifica a los clientes asignados"""
-    with app.app_context():
-        try:
-            for producto in Productos.query.all():
-                lotes_completos = producto.cantidad // producto.lotes
-                if lotes_completos > 0:
-                    clientes_asignados = ClienteProducto.query.filter_by(
-                        producto_id=producto.id
-                    ).all()
-                    
-                    for asignacion in clientes_asignados:
-                        cliente = asignacion.cliente
-                        mensaje = f"""
-                        Lote(s) Disponible(s) - {producto.nombre}
-                        Cantidad de lotes: {lotes_completos}
-                        Unidades por lote: {producto.lotes}
-                        Total unidades disponibles: {lotes_completos * producto.lotes}
-                        """
-                        
-                        send_notification(
-                            subject=f"Lote Disponible - {producto.nombre}",
-                            body=mensaje,
-                            to_email=cliente.email,
-                            to_phone=cliente.telefono
-                        )
-                        
-        except Exception as e:
-            logging.error(f"Error al revisar lotes completos: {e}")
+            logging.error(f"Error enviando email: {str(e)}")
+            return False
 
-def revisar_mantenimiento():
-    """Revisa los mantenimientos programados y genera alertas"""
-    with app.app_context():
-        try:
-            fecha_actual = datetime.now()
-            
-            # Mantenimientos próximos (próximos 7 días)
-            proximos = Mantenimiento.query.filter(
-                Mantenimiento.fecha_mantenimiento.between(
-                    fecha_actual,
-                    fecha_actual + timedelta(days=7)
-                )
-            ).all()
-            
-            # Mantenimientos vencidos
-            vencidos = Mantenimiento.query.filter(
-                Mantenimiento.fecha_mantenimiento < fecha_actual
-            ).all()
-            
-            # Procesar próximos mantenimientos
-            for mant in proximos:
-                # Verificar materiales necesarios
-                materiales_necesarios = MaterialMantenimiento.query.filter_by(
-                    mantenimiento_id=mant.id
+    def check_inventory_and_create_orders(self):
+        """Revisa inventario y crea pedidos automáticos"""
+        with self.app.app_context():
+            try:
+                # Revisar materiales bajo mínimos
+                materiales_bajos = Material.query.filter(
+                    Material.cantidad_actual < Material.cantidad_minima
                 ).all()
                 
-                materiales_faltantes = []
-                for req in materiales_necesarios:
-                    if req.material.cantidad_actual < req.cantidad_requerida:
-                        materiales_faltantes.append(req.material)
+                for material in materiales_bajos:
+                    # Verificar si no hay pedidos pendientes
+                    pedido_pendiente = Pedido.query.filter_by(
+                        material_id=material.id,
+                        estado='pendiente'
+                    ).first()
+                    
+                    if not pedido_pendiente:
+                        # Calcular cantidad óptima de pedido
+                        cantidad_pedido = (material.cantidad_minima - material.cantidad_actual) * 1.5
+                        
+                        nuevo_pedido = Pedido(
+                            material_id=material.id,
+                            proveedor_id=material.proveedor_id,
+                            cantidad=int(cantidad_pedido),
+                            estado='pendiente'
+                        )
+                        db.session.add(nuevo_pedido)
+                        
+                        # Notificar al proveedor
+                        mensaje = f"""
+                        Pedido Automático - {material.nombre}
+                        Cantidad: {int(cantidad_pedido)}
+                        Nivel actual: {material.cantidad_actual}
+                        Nivel mínimo: {material.cantidad_minima}
+                        """
+                        self.send_email(
+                            "Nuevo Pedido Automático",
+                            mensaje,
+                            material.proveedor_rel.email
+                        )
                 
-                # Notificar al técnico
-                mensaje = f"""
-                Mantenimiento Próximo - {mant.equipo}
-                Fecha programada: {mant.fecha_mantenimiento}
-                Detalles: {mant.detalles}
-                """
+                db.session.commit()
+                logging.info("Revisión de inventario completada")
                 
-                if materiales_faltantes:
-                    mensaje += "\nMateriales faltantes:\n"
-                    for mat in materiales_faltantes:
-                        mensaje += f"- {mat.nombre}: Disponible {mat.cantidad_actual}\n"
-                        generar_pedido_automatico(mat)
-                
-                if mant.tecnico:
-                    send_notification(
-                        subject=f"Mantenimiento Próximo - {mant.equipo}",
-                        body=mensaje,
-                        to_email=mant.tecnico.email,
-                        to_phone=mant.tecnico.telefono
-                    )
+            except Exception as e:
+                logging.error(f"Error en revisión de inventario: {str(e)}")
+                db.session.rollback()
+
+    def check_and_manage_offers(self):
+    
+        with self.app.app_context():
+            try:
+                fecha_actual = datetime.now()
             
-            # Procesar mantenimientos vencidos
-            for mant in vencidos:
-                mensaje = f"""
-                ALERTA: Mantenimiento Vencido - {mant.equipo}
-                Fecha programada: {mant.fecha_mantenimiento}
-                Días de retraso: {(fecha_actual.date() - mant.fecha_mantenimiento).days}
-                """
+                # Revisar ofertas activas que no han sido notificadas
+                ofertas = Oferta.query.all()
+                for oferta in ofertas:
+                    producto = oferta.producto
+                    cliente = oferta.cliente
                 
-                # Notificar al técnico y supervisores
-                if mant.tecnico:
-                    send_notification(
-                        subject=f"URGENTE: Mantenimiento Vencido - {mant.equipo}",
-                        body=mensaje,
-                        to_email=mant.tecnico.email,
-                        to_phone=mant.tecnico.telefono
-                    )
+                    # Verificar si hay suficientes lotes disponibles
+                    lotes_disponibles = producto.cantidad_lotes
+                    if lotes_disponibles >= oferta.lotes_ofrecidos:
+                        # Notificar al cliente sobre la disponibilidad
+                        mensaje = f"""
+                        Oferta Disponible - {producto.nombre}
+                    
+                        Estimado/a {cliente.nombre},
+                    
+                        Los lotes que solicitó están disponibles:
+                        - Producto: {producto.nombre}
+                        - Lotes solicitados: {oferta.lotes_ofrecidos}
+                        - Precio por unidad: ${producto.precio}
+                        - Total unidades: {oferta.lotes_ofrecidos * producto.lotes}
+                    
+                        Por favor, contáctenos para confirmar la compra.
+                        """
+                        if self.send_email(
+                            f"Oferta Disponible - {producto.nombre}",
+                            mensaje,
+                            cliente.email
+                        ):
+                            oferta.notificado = True
+                            db.session.add(oferta)
+                            logging.info(f"Notificación de oferta enviada a {cliente.email} para {producto.nombre}")
                 
-                # También notificar al administrador
-                send_notification(
-                    subject=f"URGENTE: Mantenimiento Vencido - {mant.equipo}",
-                    body=mensaje,
-                    to_email="admin@tuempresa.com"
+                    # Verificar ofertas próximas a vencer (7 días desde creación)
+                    dias_activa = (fecha_actual - oferta.fecha_creacion).days
+                    if dias_activa >= 7:
+                        mensaje_expiracion = f"""
+                        Recordatorio de Oferta - {producto.nombre}
+                    
+                        Estimado/a {cliente.nombre},
+                    
+                        Le recordamos que tiene una oferta pendiente:
+                        - Producto: {producto.nombre}
+                        - Lotes ofrecidos: {oferta.lotes_ofrecidos}
+                        - Fecha de creación: {oferta.fecha_creacion.strftime('%Y-%m-%d')}
+                    
+                        Por favor, contáctenos si aún está interesado/a.
+                        """
+                        if self.send_email(
+                            f"Recordatorio de Oferta - {producto.nombre}",
+                            mensaje_expiracion,
+                            cliente.email
+                        ):
+                    
+                            db.session.add(oferta)
+                            logging.info(f"Recordatorio de oferta enviado a {cliente.email} para {producto.nombre}")
+            
+                db.session.commit()
+                logging.info("Gestión de ofertas completada")
+            
+            except Exception as e:
+                logging.error(f"Error en gestión de ofertas: {str(e)}")
+                db.session.rollback()
+                
+    def manage_maintenance_schedule(self):
+        """Gestiona programación y seguimiento de mantenimientos"""
+        with self.app.app_context():
+            try:
+                fecha_actual = datetime.now()
+                
+                # Mantenimientos próximos (7 días)
+                proximos = Mantenimiento.query.filter(
+                    Mantenimiento.fecha_mantenimiento.between(
+                        fecha_actual.date(),
+                        (fecha_actual + timedelta(days=7)).date()
+                    ),
+                    Mantenimiento.estado == 'programado'
+                ).all()
+                
+                for mantenimiento in proximos:
+                    # Verificar disponibilidad de materiales
+                    materiales_faltantes = []
+                    for material_req in mantenimiento.materiales_requeridos:
+                        if material_req.material.cantidad_actual < material_req.cantidad_requerida:
+                            materiales_faltantes.append({
+                                'material': material_req.material,
+                                'cantidad_faltante': material_req.cantidad_requerida - material_req.material.cantidad_actual
+                            })
+                    
+                    # Crear pedidos para materiales faltantes
+                    for material_info in materiales_faltantes:
+                        material = material_info['material']
+                        cantidad_faltante = material_info['cantidad_faltante']
+                        
+                        pedido = Pedido(
+                            material_id=material.id,
+                            proveedor_id=material.proveedor_id,
+                            cantidad=int(cantidad_faltante * 1.2),  
+                            estado='pendiente'
+                        )
+                        db.session.add(pedido)
+                    
+                    # Notificar al técnico
+                    if mantenimiento.tecnico:
+                        mensaje = f"""
+                        Mantenimiento Programado - {mantenimiento.equipo}
+                        Fecha: {mantenimiento.fecha_mantenimiento}
+                        Detalles: {mantenimiento.detalles}
+                        
+                        Materiales faltantes:
+                        {self._format_missing_materials(materiales_faltantes)}
+                        """
+                        self.send_email(
+                            f"Próximo Mantenimiento - {mantenimiento.equipo}",
+                            mensaje,
+                            mantenimiento.tecnico.email
+                        )
+                
+                db.session.commit()
+                logging.info("Gestión de mantenimientos completada")
+                
+            except Exception as e:
+                logging.error(f"Error en gestión de mantenimientos: {str(e)}")
+                db.session.rollback()
+
+    def _format_missing_materials(self, materiales_faltantes):
+        """Formatea la lista de materiales faltantes para el mensaje"""
+        if not materiales_faltantes:
+            return "Todos los materiales disponibles"
+        
+        return "\n".join([
+            f"- {mat['material'].nombre}: Faltan {mat['cantidad_faltante']} unidades"
+            for mat in materiales_faltantes
+        ])
+
+    def check_system_health(self):
+        """Verifica el estado general del sistema"""
+        with self.app.app_context():
+            try:
+                # Verificar conexión a DB
+                db.session.execute('SELECT 1')
+                
+                # Verificar tablas críticas
+                tables = [Material, Cliente, Productos, Proveedor, Mantenimiento]
+                for table in tables:
+                    count = table.query.count()
+                    logging.info(f"Tabla {table.__tablename__}: {count} registros")
+                
+                # Verificar servicio de email
+                test_result = self.send_email(
+                    "Test de Sistema",
+                    "Verificación automática de sistema",
+                    self.email
                 )
                 
-        except Exception as e:
-            logging.error(f"Error al revisar mantenimientos: {e}")
-
-def verificar_salud_bot():
-    """Verifica el estado de salud del bot"""
-    try:
-        # Verificar conexión a la base de datos
-        with app.app_context():
-            db.session.execute('SELECT 1')
-        
-        # Verificar servicio de email
-        send_email(
-            subject="Bot Health Check",
-            body="Test de salud del bot",
-            to_email="empresatroll466@gmail.com"
-        )
-        
-        logging.info("Health check completado exitosamente")
-        return True
-    except Exception as e:
-        logging.error(f"Error en health check: {e}")
-        return False
-
-def bot_automatizacion():
-    """Versión mejorada del bot principal"""
-    logging.info("Iniciando bot de automatización con debugging mejorado")
-    
-    while True:
-        try:
-            logging.info("Iniciando ciclo de revisión")
-            revisar_niveles_inventario()
-            logging.info("Ciclo de revisión completado")
+                if test_result:
+                    logging.info("Verificación de sistema completada exitosamente")
+                else:
+                    logging.warning("Problemas con el servicio de email")
+                    
+            except Exception as e:
+                logging.error(f"Error en verificación de sistema: {str(e)}")
+                return False
             
-            # Aumentar el tiempo entre ciclos para evitar sobrecarga
-            time.sleep(30)  # 30 segundos entre ciclos
-            
-        except Exception as e:
-            logging.error(f"Error en ciclo principal del bot: {str(e)}")
-            time.sleep(60)  # Esperar más tiempo si hay error
+            return True
+
+    def run(self):
+        """Ejecuta el ciclo principal del bot"""
+        logging.info("Iniciando bot de automatización")
+        
+        while True:
+            try:
+                # Verificar estado del sistema cada hora
+                if datetime.now().minute == 0:
+                    self.check_system_health()
+                
+                # Revisar inventario y crear pedidos
+                self.check_inventory_and_create_orders()
+                
+                # Revisar productos y notificar clientes
+                self.check_and_manage_offers()
+                
+                # Gestionar mantenimientos
+                self.manage_maintenance_schedule()
+                
+                # Esperar antes del siguiente ciclo
+                time.sleep(60)  # 5 minutos entre ciclos
+                
+            except Exception as e:
+                logging.error(f"Error en ciclo principal: {str(e)}")
+                time.sleep(60)  # 10 minutos si hay error
 
 if __name__ == '__main__':
-    app = create_app()
-    bot_automatizacion()
+    bot = AutomatizationBot()
+    bot.run()

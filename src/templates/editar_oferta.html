@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Oferta</title>
+</head>
+<body>
+    <h1>Editar Oferta</h1>
+    <form method="POST">
+        <label for="cliente_id">Cliente:</label>
+        <select name="cliente_id" required>
+            {% for cliente in clientes %}
+                <option value="{{ cliente.id }}" {% if cliente.id == oferta.cliente_id %}selected{% endif %}>{{ cliente.nombre }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="producto_id">Producto:</label>
+        <select name="producto_id" required>
+            {% for producto in productos %}
+                <option value="{{ producto.id }}" {% if producto.id == oferta.producto_id %}selected{% endif %}>{{ producto.nombre }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="lotes_ofrecidos">Lotes Ofrecidos:</label>
+        <input type="number" name="lotes_ofrecidos" value="{{ oferta.producto.cantidad_lotes }}" required>
+
+
+        <button type="submit">Guardar Cambios</button>
+    </form>
+    <a href="{{ url_for('listar_ofertas') }}">Volver</a>
+</body>
+</html>

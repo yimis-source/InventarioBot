@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listar Proveedores</title>
+    <title>Lista de Proveedores</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <h1>Lista de Proveedores</h1>
+    <a href="{{ url_for('agregar_proveedor') }}">Crear Proveedor</a><br><br>
     <table>
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Correo</th>
+                <th>Teléfono</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -20,11 +24,15 @@
             <tr>
                 <td>{{ proveedor.id }}</td>
                 <td>{{ proveedor.nombre }}</td>
-                <td> {{proveedor.email}}</td>
+                <td>{{ proveedor.email }}</td>
+                <td>{{ proveedor.telefono }}</td>
+                <td>
+                    <a href="{{ url_for('editar_proveedor', id=proveedor.id) }}" class="btn btn-primary">Editar</a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    <a href="{{ url_for('index') }}">Volver</a>
+    <a href="{{ url_for('index') }}">Volver al inicio</a>
 </body>
 </html>
