@@ -266,3 +266,252 @@ Asignaciones cliente-producto: 8
 2024-11-08 02:04:01 - INFO - Revisión de inventario completada
 2024-11-08 02:04:01 - INFO - Gestión de ofertas completada
 2024-11-08 02:04:01 - INFO - Gestión de mantenimientos completada
+2024-11-08 13:31:45 - INFO - Iniciando bot de automatización
+2024-11-08 13:31:45 - INFO - Revisión de inventario completada
+2024-11-08 13:31:47 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 13:31:47 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para agua
+2024-11-08 13:31:50 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 13:31:50 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para agua
+2024-11-08 13:31:50 - INFO - Gestión de ofertas completada
+2024-11-08 13:31:52 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 13:31:52 - INFO - Gestión de mantenimientos completada
+2024-11-08 13:32:52 - INFO - Revisión de inventario completada
+2024-11-08 13:32:55 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 13:32:55 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para agua
+2024-11-08 13:32:58 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 13:32:58 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para agua
+2024-11-08 13:32:58 - INFO - Gestión de ofertas completada
+2024-11-08 13:33:02 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 13:33:02 - INFO - Gestión de mantenimientos completada
+2024-11-08 14:04:41 - INFO - Iniciando bot de automatización
+2024-11-08 14:04:41 - INFO - Revisión de inventario completada
+2024-11-08 14:04:41 - INFO - Gestión de ofertas completada
+2024-11-08 14:04:41 - INFO - Gestión de mantenimientos completada
+2024-11-08 14:05:05 - INFO - Iniciando pruebas del bot...
+2024-11-08 14:05:05 - ERROR - Error al crear datos de prueba: 'notificado' is an invalid keyword argument for Oferta
+2024-11-08 14:05:05 - ERROR - Error en el ciclo de pruebas: 'notificado' is an invalid keyword argument for Oferta
+2024-11-08 14:05:05 - ERROR - Error en las pruebas: 'notificado' is an invalid keyword argument for Oferta
+2024-11-08 14:05:53 - INFO - Iniciando pruebas del bot...
+2024-11-08 14:05:53 - INFO - Datos de prueba creados exitosamente
+2024-11-08 14:05:53 - INFO - Simulando consumo de 2 unidades de Material Test 1
+2024-11-08 14:05:53 - INFO - Simulando consumo de 4 unidades de Material Test 2
+2024-11-08 14:05:53 - INFO - Simulando consumo de 3 unidades de Material Test 3
+2024-11-08 14:05:53 - INFO - Simulando consumo de 5 unidades de Material Test 4
+2024-11-08 14:05:53 - INFO - Simulando consumo de 2 unidades de Material Test 5
+2024-11-08 14:05:53 - INFO - Simulando consumo de 3 unidades de Material Test 6
+2024-11-08 14:05:55 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:05:58 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:06:01 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:06:04 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:06:07 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:06:10 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:06:10 - INFO - Revisión de inventario completada
+2024-11-08 14:06:12 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:06:12 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 1
+2024-11-08 14:06:14 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:06:14 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 2
+2024-11-08 14:06:16 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:06:16 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 3
+2024-11-08 14:06:19 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:06:19 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 5
+2024-11-08 14:06:19 - INFO - Gestión de ofertas completada
+2024-11-08 14:06:19 - ERROR - Error en gestión de mantenimientos: 'Mantenimiento' object has no attribute 'materiales_requeridos'
+2024-11-08 14:06:19 - ERROR - Error en verificación de sistema: Textual SQL expression 'SELECT 1' should be explicitly declared as text('SELECT 1')
+2024-11-08 14:06:24 - INFO - Simulando consumo de 1 unidades de Material Test 1
+2024-11-08 14:06:24 - INFO - Simulando consumo de 4 unidades de Material Test 2
+2024-11-08 14:06:24 - INFO - Simulando consumo de 5 unidades de Material Test 3
+2024-11-08 14:06:24 - INFO - Simulando consumo de 3 unidades de Material Test 5
+2024-11-08 14:06:24 - INFO - Simulando consumo de 4 unidades de Material Test 6
+2024-11-08 14:06:24 - INFO - Revisión de inventario completada
+2024-11-08 14:06:25 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:06:25 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 1
+2024-11-08 14:06:28 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:06:28 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 2
+2024-11-08 14:06:31 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:06:31 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 3
+2024-11-08 14:06:33 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:06:33 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 5
+2024-11-08 14:06:33 - INFO - Gestión de ofertas completada
+2024-11-08 14:06:33 - ERROR - Error en gestión de mantenimientos: 'Mantenimiento' object has no attribute 'materiales_requeridos'
+2024-11-08 14:06:33 - ERROR - Error en verificación de sistema: Textual SQL expression 'SELECT 1' should be explicitly declared as text('SELECT 1')
+2024-11-08 14:06:38 - INFO - Simulando consumo de 2 unidades de Material Test 1
+2024-11-08 14:06:38 - INFO - Simulando consumo de 3 unidades de Material Test 2
+2024-11-08 14:06:38 - INFO - Simulando consumo de 4 unidades de Material Test 3
+2024-11-08 14:06:38 - INFO - Simulando consumo de 3 unidades de Material Test 6
+2024-11-08 14:06:38 - INFO - Revisión de inventario completada
+2024-11-08 14:06:42 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:06:42 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 1
+2024-11-08 14:06:43 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:06:43 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 2
+2024-11-08 14:06:45 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:06:45 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 3
+2024-11-08 14:06:48 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:06:48 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 5
+2024-11-08 14:06:48 - INFO - Gestión de ofertas completada
+2024-11-08 14:06:48 - ERROR - Error en gestión de mantenimientos: 'Mantenimiento' object has no attribute 'materiales_requeridos'
+2024-11-08 14:06:48 - ERROR - Error en verificación de sistema: Textual SQL expression 'SELECT 1' should be explicitly declared as text('SELECT 1')
+2024-11-08 14:14:06 - INFO - Iniciando pruebas del bot...
+2024-11-08 14:14:06 - INFO - Datos de prueba creados exitosamente
+2024-11-08 14:14:06 - INFO - Simulando consumo de 4 unidades de Material Test 1
+2024-11-08 14:14:06 - INFO - Simulando consumo de 1 unidades de Material Test 2
+2024-11-08 14:14:06 - INFO - Simulando consumo de 2 unidades de Material Test 3
+2024-11-08 14:14:06 - INFO - Simulando consumo de 3 unidades de Material Test 4
+2024-11-08 14:14:06 - INFO - Simulando consumo de 5 unidades de Material Test 5
+2024-11-08 14:14:08 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:14:10 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:14:13 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:14:15 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:14:15 - INFO - Revisión de inventario completada
+2024-11-08 14:14:18 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:14:18 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 1
+2024-11-08 14:14:20 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:14:20 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 2
+2024-11-08 14:14:22 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:14:22 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 3
+2024-11-08 14:14:25 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:14:25 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 4
+2024-11-08 14:14:25 - INFO - Gestión de ofertas completada
+2024-11-08 14:14:27 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:14:27 - INFO - Gestión de mantenimientos completada
+2024-11-08 14:14:27 - ERROR - Error en verificación de sistema: Textual SQL expression 'SELECT 1' should be explicitly declared as text('SELECT 1')
+2024-11-08 14:14:32 - INFO - Simulando consumo de 3 unidades de Material Test 1
+2024-11-08 14:14:32 - INFO - Simulando consumo de 3 unidades de Material Test 2
+2024-11-08 14:14:32 - INFO - Simulando consumo de 4 unidades de Material Test 3
+2024-11-08 14:14:32 - INFO - Simulando consumo de 5 unidades de Material Test 4
+2024-11-08 14:14:32 - INFO - Simulando consumo de 1 unidades de Material Test 6
+2024-11-08 14:14:34 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:14:37 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:14:37 - INFO - Revisión de inventario completada
+2024-11-08 14:14:40 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:14:40 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 1
+2024-11-08 14:14:42 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:14:42 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 2
+2024-11-08 14:14:44 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:14:44 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 3
+2024-11-08 14:14:47 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:14:47 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 4
+2024-11-08 14:14:47 - INFO - Gestión de ofertas completada
+2024-11-08 14:14:49 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 14:14:49 - INFO - Gestión de mantenimientos completada
+2024-11-08 14:14:49 - ERROR - Error en verificación de sistema: Textual SQL expression 'SELECT 1' should be explicitly declared as text('SELECT 1')
+2024-11-08 22:47:22 - INFO - Iniciando pruebas del bot...
+2024-11-08 22:47:22 - INFO - Datos de prueba creados exitosamente
+2024-11-08 22:47:22 - INFO - Simulando consumo de 1 unidades de Material Test 1
+2024-11-08 22:47:22 - INFO - Simulando consumo de 1 unidades de Material Test 2
+2024-11-08 22:47:22 - INFO - Simulando consumo de 1 unidades de Material Test 4
+2024-11-08 22:47:22 - INFO - Simulando consumo de 5 unidades de Material Test 5
+2024-11-08 22:47:22 - INFO - Simulando consumo de 3 unidades de Material Test 6
+2024-11-08 22:47:25 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:47:28 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:47:31 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:47:33 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:47:33 - INFO - Revisión de inventario completada
+2024-11-08 22:47:36 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:47:36 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 1
+2024-11-08 22:47:40 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:47:40 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 2
+2024-11-08 22:47:42 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:47:42 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 3
+2024-11-08 22:47:42 - INFO - Gestión de ofertas completada
+2024-11-08 22:47:45 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:47:48 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:47:48 - INFO - Gestión de mantenimientos completada
+2024-11-08 22:47:48 - ERROR - Error en verificación de sistema: Textual SQL expression 'SELECT 1' should be explicitly declared as text('SELECT 1')
+2024-11-08 22:47:53 - INFO - Simulando consumo de 1 unidades de Material Test 1
+2024-11-08 22:47:53 - INFO - Simulando consumo de 2 unidades de Material Test 2
+2024-11-08 22:47:53 - INFO - Simulando consumo de 1 unidades de Material Test 3
+2024-11-08 22:47:53 - INFO - Simulando consumo de 4 unidades de Material Test 4
+2024-11-08 22:47:53 - INFO - Simulando consumo de 4 unidades de Material Test 5
+2024-11-08 22:47:53 - INFO - Simulando consumo de 4 unidades de Material Test 6
+2024-11-08 22:47:57 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:47:57 - INFO - Revisión de inventario completada
+2024-11-08 22:47:59 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:47:59 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 1
+2024-11-08 22:48:02 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:48:02 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 2
+2024-11-08 22:48:05 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:48:05 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 3
+2024-11-08 22:48:05 - INFO - Gestión de ofertas completada
+2024-11-08 22:48:08 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:48:11 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:48:11 - INFO - Gestión de mantenimientos completada
+2024-11-08 22:48:11 - ERROR - Error en verificación de sistema: Textual SQL expression 'SELECT 1' should be explicitly declared as text('SELECT 1')
+2024-11-08 22:48:16 - INFO - Simulando consumo de 5 unidades de Material Test 1
+2024-11-08 22:48:16 - INFO - Simulando consumo de 4 unidades de Material Test 2
+2024-11-08 22:48:16 - INFO - Simulando consumo de 5 unidades de Material Test 4
+2024-11-08 22:48:16 - INFO - Simulando consumo de 3 unidades de Material Test 5
+2024-11-08 22:48:16 - INFO - Simulando consumo de 5 unidades de Material Test 6
+2024-11-08 22:48:19 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:48:19 - INFO - Revisión de inventario completada
+2024-11-08 22:48:22 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:48:22 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 1
+2024-11-08 22:48:25 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:48:25 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 2
+2024-11-08 22:48:28 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:48:28 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 3
+2024-11-08 22:48:28 - INFO - Gestión de ofertas completada
+2024-11-08 22:48:31 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:48:34 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:48:34 - INFO - Gestión de mantenimientos completada
+2024-11-08 22:48:34 - ERROR - Error en verificación de sistema: Textual SQL expression 'SELECT 1' should be explicitly declared as text('SELECT 1')
+2024-11-08 22:48:39 - INFO - 
+Pedidos generados: 6
+2024-11-08 22:48:39 - INFO - - Pedido #1: Material Test 1 - 24 unidades - Estado: pendiente
+2024-11-08 22:48:39 - INFO - - Pedido #2: Material Test 3 - 36 unidades - Estado: pendiente
+2024-11-08 22:48:39 - INFO - - Pedido #3: Material Test 4 - 9 unidades - Estado: pendiente
+2024-11-08 22:48:39 - INFO - - Pedido #4: Material Test 6 - 16 unidades - Estado: pendiente
+2024-11-08 22:48:39 - INFO - - Pedido #5: Material Test 5 - 6 unidades - Estado: pendiente
+2024-11-08 22:48:39 - INFO - - Pedido #6: Material Test 2 - 6 unidades - Estado: pendiente
+2024-11-08 22:48:39 - INFO - 
+Mantenimientos procesados: 6
+2024-11-08 22:48:39 - INFO - - Equipo Test 1: 2024-11-03 - Estado: en_proceso
+2024-11-08 22:48:39 - INFO - - Equipo Test 2: 2024-11-06 - Estado: en_proceso
+2024-11-08 22:48:39 - INFO - - Equipo Test 3: 2024-11-09 - Estado: programado
+2024-11-08 22:48:39 - INFO - - Equipo Test 4: 2024-11-11 - Estado: programado
+2024-11-08 22:48:39 - INFO - - Equipo Test 5: 2024-11-15 - Estado: completado
+2024-11-08 22:48:39 - INFO - - Equipo Test 6: 2024-11-22 - Estado: completado
+2024-11-08 22:48:39 - INFO - 
+Niveles de materiales:
+2024-11-08 22:48:39 - INFO - - Material Test 1: 3/25
+2024-11-08 22:48:39 - INFO - - Material Test 2: 21/25
+2024-11-08 22:48:39 - INFO - - Material Test 3: 0/25
+2024-11-08 22:48:39 - INFO - - Material Test 4: 10/25
+2024-11-08 22:48:39 - INFO - - Material Test 5: 18/25
+2024-11-08 22:48:39 - INFO - - Material Test 6: 5/25
+2024-11-08 22:48:39 - INFO - 
+Asignaciones cliente-producto: 8
+2024-11-08 22:48:39 - INFO - 
+Ofertas generadas: 5
+2024-11-08 22:48:39 - INFO - - Oferta #1: Producto Test 1 - 4 lotes
+2024-11-08 22:48:39 - INFO - - Oferta #2: Producto Test 2 - 3 lotes
+2024-11-08 22:48:39 - INFO - - Oferta #3: Producto Test 3 - 4 lotes
+2024-11-08 22:48:39 - INFO - - Oferta #4: Producto Test 4 - 4 lotes
+2024-11-08 22:48:39 - INFO - - Oferta #5: Producto Test 5 - 5 lotes
+2024-11-08 22:48:39 - INFO - Iniciando bot de automatización
+2024-11-08 22:48:39 - INFO - Simulando consumo de 2 unidades de Material Test 2
+2024-11-08 22:48:39 - INFO - Simulando consumo de 5 unidades de Material Test 4
+2024-11-08 22:48:39 - INFO - Simulando consumo de 1 unidades de Material Test 5
+2024-11-08 22:48:39 - INFO - Simulando consumo de 5 unidades de Material Test 6
+2024-11-08 22:48:39 - INFO - Revisión de inventario completada
+2024-11-08 22:48:42 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:48:42 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 1
+2024-11-08 22:48:45 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:48:45 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 2
+2024-11-08 22:48:48 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:48:48 - INFO - Notificación de oferta enviada a empresatroll466@gmail.com para Producto Test 3
+2024-11-08 22:48:48 - INFO - Gestión de ofertas completada
+2024-11-08 22:48:49 - INFO - Simulando consumo de 4 unidades de Material Test 2
+2024-11-08 22:48:49 - INFO - Simulando consumo de 2 unidades de Material Test 4
+2024-11-08 22:48:49 - INFO - Simulando consumo de 3 unidades de Material Test 5
+2024-11-08 22:48:50 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:48:53 - INFO - Email enviado exitosamente a empresatroll466@gmail.com
+2024-11-08 22:48:53 - INFO - Gestión de mantenimientos completada
+2024-11-08 22:48:59 - INFO - Simulando consumo de 5 unidades de Material Test 2
+2024-11-08 22:48:59 - INFO - Simulando consumo de 3 unidades de Material Test 5
+2024-11-08 22:49:09 - INFO - Simulando consumo de 1 unidades de Material Test 1
+2024-11-08 22:49:09 - INFO - Simulando consumo de 5 unidades de Material Test 2
+2024-11-08 22:49:09 - INFO - Simulando consumo de 1 unidades de Material Test 4
+2024-11-08 22:49:09 - INFO - Simulando consumo de 3 unidades de Material Test 5
+2024-11-08 22:49:19 - INFO - Simulando consumo de 1 unidades de Material Test 1
+2024-11-08 22:49:19 - INFO - Simulando consumo de 4 unidades de Material Test 2
+2024-11-08 22:49:19 - INFO - Simulando consumo de 2 unidades de Material Test 5

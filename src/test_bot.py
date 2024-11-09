@@ -1,7 +1,7 @@
 from config import create_app, db
 from models import (
-    Material, Cliente, Mantenimiento, Proveedor, Productos,
-    Pedido, ClienteProducto, TecnicoMantenimiento, MaterialMantenimiento
+    Material, Cliente, Mantenimiento, Proveedor, Productos, Oferta, Pedido,
+    ClienteProducto, TecnicoMantenimiento, 
 )
 from datetime import datetime, timedelta
 from bot import AutomatizationBot
@@ -24,8 +24,9 @@ def crear_datos_prueba():
     with app.app_context():
         try:
             # Limpiar datos existentes
-            db.session.query(MaterialMantenimiento).delete()
+        
             db.session.query(Pedido).delete()
+            db.session.query(Oferta).delete()
             db.session.query(ClienteProducto).delete()
             db.session.query(Material).delete()
             db.session.query(Mantenimiento).delete()
@@ -126,15 +127,17 @@ def crear_datos_prueba():
                 db.session.add(mantenimiento)
                 db.session.flush()
                 
-                # Agregar requerimientos de materiales aleatorios
-                materiales = Material.query.all()
-                for _ in range(random.randint(1, 3)):
-                    material_mant = MaterialMantenimiento(
-                        material_id=random.choice(materiales).id,
-                        mantenimiento_id=mantenimiento.id,
-                        cantidad_requerida=random.randint(5, 15)
-                    )
-                    db.session.add(material_mant)
+            
+            
+            # Crear ofertas de prueba
+            for i, producto in enumerate(productos):
+                oferta = Oferta(
+                    producto_id=producto.id,
+                    cliente_id=random.choice(clientes).id,
+                    lotes_ofrecidos=random.randint(3, 8),
+                    fecha_creacion=datetime.now() - timedelta(days=i),
+                )
+                db.session.add(oferta)
             
             db.session.commit()
             logging.info("Datos de prueba creados exitosamente")
@@ -168,6 +171,12 @@ def verificar_resultados():
             # Verificar asignaciones cliente-producto
             asignaciones = ClienteProducto.query.all()
             logging.info(f"\nAsignaciones cliente-producto: {len(asignaciones)}")
+            
+            # Verificar ofertas
+            ofertas = Oferta.query.all()
+            logging.info(f"\nOfertas generadas: {len(ofertas)}")
+            for oferta in ofertas:
+                logging.info(f"- Oferta #{oferta.id}: {oferta.producto.nombre} - {oferta.lotes_ofrecidos} lotes")
             
             return True
             
@@ -209,7 +218,7 @@ def simular_ciclo_completo():
             
             # Ejecutar funciones del bot
             bot.check_inventory_and_create_orders()
-            bot.check_and_notify_product_availability()
+            bot.check_and_manage_offers()
             bot.manage_maintenance_schedule()
             bot.check_system_health()
             

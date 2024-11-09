@@ -42,10 +42,25 @@
                 <td>{{ mantenimiento.fecha_mantenimiento.strftime('%d-%m-%Y') }}</td>
                 <td>{{ mantenimiento.detalles }}</td>
                 <td>{{ mantenimiento.tecnico.nombre if mantenimiento.tecnico else 'Sin asignar' }}</td>
+                <td>{{mantenimiento.estado}}</td>   
                 <td>
+                    <a href="{{ url_for('editar_mantenimiento', id=mantenimiento.id) }}" class="btn btn-primary">Editar</a>
                     <a href="{{ url_for('asignar_tecnico_mantenimiento', mantenimiento_id=mantenimiento.id) }}" class="btn btn-primary">Asignar Técnico</a>
                 </td>
             </tr>
+            <!-- Mostrar materiales si están solicitados -->
+            {% if mantenimiento.materiales_requeridos %}
+            <tr>
+                <td colspan="6">
+                    <h4>Materiales Solicitados</h4>
+                    <ul>
+                        {% for material in mantenimiento.materiales_requeridos %}
+                        <li>{{ material.material.nombre }} - Cantidad: {{ material.cantidad_requerida }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            {% endif %}
             {% endfor %}
         </tbody>
     </table>

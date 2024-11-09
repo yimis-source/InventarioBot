@@ -45,16 +45,6 @@ class TecnicoMantenimiento(db.Model):
     especialidad = db.Column(db.String(100))
     mantenimientos = db.relationship('Mantenimiento', backref='tecnico')
 
-class MaterialMantenimiento(db.Model):
-    __tablename__ = 'material_mantenimiento'
-    id = db.Column(db.Integer, primary_key=True)
-    material_id = db.Column(db.Integer, db.ForeignKey('materiales.id'), nullable=False)
-    mantenimiento_id = db.Column(db.Integer, db.ForeignKey('mantenimiento.id'), nullable=False)
-    cantidad_requerida = db.Column(db.Integer, nullable=False)
-
-    material = db.relationship('Material', backref='mantenimientos_requeridos')
-    mantenimiento = db.relationship('Mantenimiento', backref='materiales_requeridos')
-
 class Material(db.Model):
     __tablename__ = 'materiales'
     id = db.Column(db.Integer, primary_key=True)

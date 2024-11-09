@@ -8,9 +8,8 @@ import smtplib
 from config import create_app, db
 from models import (
     Material, Cliente, Mantenimiento, Oferta, Proveedor, Productos,
-    Pedido, ClienteProducto, TecnicoMantenimiento, MaterialMantenimiento
+    Pedido, ClienteProducto, TecnicoMantenimiento, 
 )
-
 
 logging.basicConfig(
     filename='bot_automatization.log',
@@ -92,7 +91,6 @@ class AutomatizationBot:
                 db.session.rollback()
 
     def check_and_manage_offers(self):
-    
         with self.app.app_context():
             try:
                 fecha_actual = datetime.now()
@@ -125,8 +123,6 @@ class AutomatizationBot:
                             mensaje,
                             cliente.email
                         ):
-                            oferta.notificado = True
-                            db.session.add(oferta)
                             logging.info(f"Notificación de oferta enviada a {cliente.email} para {producto.nombre}")
                 
                     # Verificar ofertas próximas a vencer (7 días desde creación)
@@ -149,8 +145,6 @@ class AutomatizationBot:
                             mensaje_expiracion,
                             cliente.email
                         ):
-                    
-                            db.session.add(oferta)
                             logging.info(f"Recordatorio de oferta enviado a {cliente.email} para {producto.nombre}")
             
                 db.session.commit()
@@ -176,37 +170,12 @@ class AutomatizationBot:
                 ).all()
                 
                 for mantenimiento in proximos:
-                    # Verificar disponibilidad de materiales
-                    materiales_faltantes = []
-                    for material_req in mantenimiento.materiales_requeridos:
-                        if material_req.material.cantidad_actual < material_req.cantidad_requerida:
-                            materiales_faltantes.append({
-                                'material': material_req.material,
-                                'cantidad_faltante': material_req.cantidad_requerida - material_req.material.cantidad_actual
-                            })
-                    
-                    # Crear pedidos para materiales faltantes
-                    for material_info in materiales_faltantes:
-                        material = material_info['material']
-                        cantidad_faltante = material_info['cantidad_faltante']
-                        
-                        pedido = Pedido(
-                            material_id=material.id,
-                            proveedor_id=material.proveedor_id,
-                            cantidad=int(cantidad_faltante * 1.2),  
-                            estado='pendiente'
-                        )
-                        db.session.add(pedido)
-                    
-                    # Notificar al técnico
+                    # Notificar al técnico si está asignado
                     if mantenimiento.tecnico:
                         mensaje = f"""
                         Mantenimiento Programado - {mantenimiento.equipo}
                         Fecha: {mantenimiento.fecha_mantenimiento}
                         Detalles: {mantenimiento.detalles}
-                        
-                        Materiales faltantes:
-                        {self._format_missing_materials(materiales_faltantes)}
                         """
                         self.send_email(
                             f"Próximo Mantenimiento - {mantenimiento.equipo}",
@@ -220,16 +189,6 @@ class AutomatizationBot:
             except Exception as e:
                 logging.error(f"Error en gestión de mantenimientos: {str(e)}")
                 db.session.rollback()
-
-    def _format_missing_materials(self, materiales_faltantes):
-        """Formatea la lista de materiales faltantes para el mensaje"""
-        if not materiales_faltantes:
-            return "Todos los materiales disponibles"
-        
-        return "\n".join([
-            f"- {mat['material'].nombre}: Faltan {mat['cantidad_faltante']} unidades"
-            for mat in materiales_faltantes
-        ])
 
     def check_system_health(self):
         """Verifica el estado general del sistema"""
@@ -282,11 +241,11 @@ class AutomatizationBot:
                 self.manage_maintenance_schedule()
                 
                 # Esperar antes del siguiente ciclo
-                time.sleep(60)  # 5 minutos entre ciclos
+                time.sleep(60)  # 1 minuto entre ciclos
                 
             except Exception as e:
                 logging.error(f"Error en ciclo principal: {str(e)}")
-                time.sleep(60)  # 10 minutos si hay error
+                time.sleep(60)  # 1 minuto si hay error
 
 if __name__ == '__main__':
     bot = AutomatizationBot()
