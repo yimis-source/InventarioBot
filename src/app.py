@@ -1,8 +1,24 @@
 # app.py
 from flask import render_template, request, redirect, url_for, flash
 from config import create_app, db
-from models import ClienteProducto, Material, Cliente, Mantenimiento, Proveedor, Productos, TecnicoMantenimiento,Pedido, Oferta
-from datetime import datetime
+from models import ClienteProducto, Material, Cliente, Mantenimiento, Proveedor, Productos, TecnicoMantenimiento, Pedido, Oferta
+from datetime import datetime, timezone
+import logging
+from validators import (
+    sanitize_string, validate_email, validate_phone,
+    validate_positive_integer, validate_positive_float,
+    validate_date_string, validate_estado
+)
+
+# Configurar logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('app.log'),
+        logging.StreamHandler()
+    ]
+)
 
 app = create_app()
 
@@ -15,15 +31,41 @@ def index():
 def agregar_material():
     if request.method == 'POST':
         try:
-            nombre = request.form['nombre']
-            cantidad_actual = int(request.form['cantidad_actual'])
-            cantidad_minima = int(request.form['cantidad_minima'])
-            proveedor_id = int(request.form['proveedor_id'])
-            productos_id = request.form.get('productos_id')
-            
-            if productos_id:
-                productos_id = int(productos_id)
-            
+            # Validación y sanitización de entrada
+            nombre = sanitize_string(request.form.get('nombre', ''), max_length=100)
+            if not nombre:
+                flash('Error: El nombre del material es requerido.', 'error')
+                return redirect(url_for('agregar_material'))
+
+            cantidad_actual = validate_positive_integer(request.form.get('cantidad_actual', 0))
+            cantidad_minima = validate_positive_integer(request.form.get('cantidad_minima', 0))
+            proveedor_id = validate_positive_integer(request.form.get('proveedor_id', 0), min_value=1)
+
+            if cantidad_actual is None or cantidad_minima is None:
+                flash('Error: Las cantidades deben ser números enteros positivos.', 'error')
+                return redirect(url_for('agregar_material'))
+
+            if proveedor_id is None:
+                flash('Error: Debe seleccionar un proveedor válido.', 'error')
+                return redirect(url_for('agregar_material'))
+
+            # Verificar que el proveedor existe
+            proveedor = Proveedor.query.get(proveedor_id)
+            if not proveedor:
+                flash('Error: El proveedor seleccionado no existe.', 'error')
+                return redirect(url_for('agregar_material'))
+
+            productos_id = None
+            productos_id_form = request.form.get('productos_id')
+            if productos_id_form:
+                productos_id = validate_positive_integer(productos_id_form, min_value=1)
+                if productos_id:
+                    # Verificar que el producto existe
+                    producto = Productos.query.get(productos_id)
+                    if not producto:
+                        flash('Error: El producto seleccionado no existe.', 'error')
+                        return redirect(url_for('agregar_material'))
+
             nuevo_material = Material(
                 nombre=nombre,
                 cantidad_actual=cantidad_actual,
@@ -33,17 +75,16 @@ def agregar_material():
             )
             db.session.add(nuevo_material)
             db.session.commit()
+            logging.info(f'Material "{nombre}" agregado exitosamente (ID: {nuevo_material.id})')
             flash('Material agregado exitosamente.', 'success')
-        except ValueError:
-            flash('Error: Los valores numéricos no son válidos.', 'error')
-            return redirect(url_for('agregar_material'))
         except Exception as e:
             db.session.rollback()
-            flash(f'Error al agregar material: {str(e)}', 'error')
+            logging.error(f'Error al agregar material: {str(e)}')
+            flash('Error al agregar material. Por favor, intente nuevamente.', 'error')
             return redirect(url_for('agregar_material'))
-        
+
         return redirect(url_for('listar_materiales'))
-    
+
     proveedores = Proveedor.query.all()
     productos = Productos.query.all()
     return render_template('agregar_material.html', proveedores=proveedores, productos=productos)
@@ -64,7 +105,7 @@ def editar_material(id):
         try:
             material.cantidad_actual = int(request.form['cantidad_actual'])
             material.cantidad_minima = int(request.form['cantidad_minima'])
-            material.ultima_actualizacion = datetime.now(datetime.timezone.utc)
+            material.ultima_actualizacion = datetime.now(timezone.utc)
             db.session.commit()
             flash('Material actualizado exitosamente.', 'success')
         except ValueError:
@@ -83,10 +124,23 @@ def editar_material(id):
 def agregar_proveedor():
     if request.method == 'POST':
         try:
-            nombre = request.form['nombre']
-            telefono = request.form['telefono']
-            email = request.form['email']
-            
+            # Validación y sanitización de entrada
+            nombre = sanitize_string(request.form.get('nombre', ''), max_length=100)
+            telefono = sanitize_string(request.form.get('telefono', ''), max_length=20)
+            email = sanitize_string(request.form.get('email', ''), max_length=120)
+
+            if not nombre:
+                flash('Error: El nombre del proveedor es requerido.', 'error')
+                return redirect(url_for('agregar_proveedor'))
+
+            if not validate_phone(telefono):
+                flash('Error: El teléfono ingresado no es válido.', 'error')
+                return redirect(url_for('agregar_proveedor'))
+
+            if not validate_email(email):
+                flash('Error: El email ingresado no es válido.', 'error')
+                return redirect(url_for('agregar_proveedor'))
+
             nuevo_proveedor = Proveedor(
                 nombre=nombre,
                 telefono=telefono,
@@ -94,13 +148,15 @@ def agregar_proveedor():
             )
             db.session.add(nuevo_proveedor)
             db.session.commit()
+            logging.info(f'Proveedor "{nombre}" agregado exitosamente (ID: {nuevo_proveedor.id})')
             flash('Proveedor agregado exitosamente.', 'success')
             return redirect(url_for('listar_proveedores'))
         except Exception as e:
             db.session.rollback()
-            flash(f'Error al agregar proveedor: {str(e)}', 'error')
+            logging.error(f'Error al agregar proveedor: {str(e)}')
+            flash('Error al agregar proveedor. Por favor, intente nuevamente.', 'error')
             return redirect(url_for('agregar_proveedor'))
-    
+
     return render_template('agregar_proveedor.html')
 
 @app.route('/listar_proveedores')
@@ -131,10 +187,23 @@ def editar_proveedor(id):
 def agregar_cliente():
     if request.method == 'POST':
         try:
-            nombre = request.form['nombre']
-            email = request.form['email']
-            telefono = request.form['telefono']
-            
+            # Validación y sanitización de entrada
+            nombre = sanitize_string(request.form.get('nombre', ''), max_length=100)
+            email = sanitize_string(request.form.get('email', ''), max_length=120)
+            telefono = sanitize_string(request.form.get('telefono', ''), max_length=20)
+
+            if not nombre:
+                flash('Error: El nombre del cliente es requerido.', 'error')
+                return redirect(url_for('agregar_cliente'))
+
+            if not validate_email(email):
+                flash('Error: El email ingresado no es válido.', 'error')
+                return redirect(url_for('agregar_cliente'))
+
+            if not validate_phone(telefono):
+                flash('Error: El teléfono ingresado no es válido.', 'error')
+                return redirect(url_for('agregar_cliente'))
+
             nuevo_cliente = Cliente(
                 nombre=nombre,
                 email=email,
@@ -142,13 +211,15 @@ def agregar_cliente():
             )
             db.session.add(nuevo_cliente)
             db.session.commit()
+            logging.info(f'Cliente "{nombre}" agregado exitosamente (ID: {nuevo_cliente.id})')
             flash('Cliente agregado exitosamente.', 'success')
             return redirect(url_for('listar_clientes'))
         except Exception as e:
             db.session.rollback()
-            flash(f'Error al agregar cliente: {str(e)}', 'error')
+            logging.error(f'Error al agregar cliente: {str(e)}')
+            flash('Error al agregar cliente. Por favor, intente nuevamente.', 'error')
             return redirect(url_for('agregar_cliente'))
-    
+
     return render_template('agregar_cliente.html')
 
 @app.route('/listar_clientes')
@@ -247,12 +318,13 @@ def editar_producto(id):
         
         try:
             db.session.commit()
+            logging.info(f'Producto actualizado exitosamente (ID: {id})')
             flash('Producto actualizado con éxito.', 'success')
             return redirect(url_for('listar_productos'))
         except Exception as e:
             db.session.rollback()
+            logging.error(f'Error al actualizar producto (ID: {id}): {str(e)}')
             flash('Error al actualizar el producto.', 'error')
-            print(e)
             return redirect(url_for('editar_producto', id=id))
     
     return render_template('editar_producto.html', producto=producto)

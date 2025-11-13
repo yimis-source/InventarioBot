@@ -21,8 +21,12 @@ logging.basicConfig(
 class AutomatizationBot:
     def __init__(self):
         self.app = create_app()
-        self.email = os.getenv('EMAIL_USER', 'empresatroll466@gmail.com')
-        self.password = os.getenv('EMAIL_PASSWORD', 'xjps xhrb nbni plue')
+        self.email = os.getenv('EMAIL_USER')
+        self.password = os.getenv('EMAIL_PASSWORD')
+
+        if not self.email or not self.password:
+            logging.error("EMAIL_USER y EMAIL_PASSWORD deben estar configurados en variables de entorno")
+            raise ValueError("Credenciales de email no configuradas")
         
     def send_email(self, subject, body, to_email):
         try:
@@ -195,7 +199,8 @@ class AutomatizationBot:
         with self.app.app_context():
             try:
                 # Verificar conexión a DB
-                db.session.execute('SELECT 1')
+                from sqlalchemy import text
+                db.session.execute(text('SELECT 1'))
                 
                 # Verificar tablas críticas
                 tables = [Material, Cliente, Productos, Proveedor, Mantenimiento]

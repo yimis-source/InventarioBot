@@ -1,5 +1,5 @@
 from config import db
-from datetime import datetime
+from datetime import datetime, timezone
 
 class Oferta(db.Model):
     __tablename__ = 'ofertas'
@@ -7,7 +7,7 @@ class Oferta(db.Model):
     cliente_id = db.Column(db.Integer, db.ForeignKey('clientes.id'), nullable=False)
     producto_id = db.Column(db.Integer, db.ForeignKey('productos.id'), nullable=False)
     lotes_ofrecidos = db.Column(db.Integer, nullable=False)
-    fecha_creacion = db.Column(db.DateTime, default=datetime.utcnow)
+    fecha_creacion = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
 
     cliente = db.relationship('Cliente', backref=db.backref('ofertas', lazy=True))
     producto = db.relationship('Productos', backref=db.backref('ofertas', lazy=True))
@@ -19,8 +19,8 @@ class Pedido(db.Model):
     proveedor_id = db.Column(db.Integer, db.ForeignKey('proveedores.id'), nullable=False)
     cantidad = db.Column(db.Integer, nullable=False)
     estado = db.Column(db.String(20), nullable=False, default='pendiente')
-    fecha_creacion = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    fecha_actualizacion = db.Column(db.DateTime, onupdate=datetime.utcnow)
+    fecha_creacion = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
+    fecha_actualizacion = db.Column(db.DateTime, onupdate=lambda: datetime.now(timezone.utc))
 
     material = db.relationship('Material', backref='pedidos')
     proveedor = db.relationship('Proveedor', backref='pedidos')
@@ -53,8 +53,8 @@ class Material(db.Model):
     cantidad_minima = db.Column(db.Integer, nullable=False)
     proveedor_id = db.Column(db.Integer, db.ForeignKey('proveedores.id'), nullable=False)
     productos_id = db.Column(db.Integer, db.ForeignKey('productos.id'), nullable=True)
-    fecha_creacion = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    ultima_actualizacion = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
+    fecha_creacion = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
+    ultima_actualizacion = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
 class Productos(db.Model):  
     __tablename__ = 'productos'
@@ -64,7 +64,7 @@ class Productos(db.Model):
     lotes = db.Column(db.Integer, nullable=False)
     cantidad = db.Column(db.Integer, nullable=False)
     materiales = db.relationship('Material', backref='producto_rel', lazy=True)
-    fecha_creacion = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    fecha_creacion = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
 
     @property
     def cantidad_lotes(self):
@@ -76,10 +76,10 @@ class Mantenimiento(db.Model):
     equipo = db.Column(db.String(100), nullable=False)
     fecha_mantenimiento = db.Column(db.Date, nullable=False)
     detalles = db.Column(db.String(200), nullable=False)
-    fecha_registro = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    fecha_registro = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
     tecnico_id = db.Column(db.Integer, db.ForeignKey('tecnicos.id'))
     estado = db.Column(db.String(20), default='programado')
-    ultima_actualizacion = db.Column(db.DateTime, onupdate=datetime.utcnow)
+    ultima_actualizacion = db.Column(db.DateTime, onupdate=lambda: datetime.now(timezone.utc))
 
 class Cliente(db.Model):
     __tablename__ = 'clientes'
